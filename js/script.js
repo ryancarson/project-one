@@ -138,4 +138,4 @@ function printQuote () {
 }
 
 // Change the quote after 10 seconds if the button isn't clicked
-var intervalID = window.setInterval(printQuote, 5000);
+var intervalID = window.setInterval(printQuote, 10000);

@@ -7,7 +7,18 @@
 // when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
-// TODO Background color of page changes each time a new quote is displayed
+// Global array for background colors
+var bg_colors = [
+  "Red",
+  "Orange",
+  "Green",
+  "Blue",
+  "Indigo",
+  "Violet"
+]
+
+// Global array to keep track of unique quotes that have been used
+var unique_quotes_used = [];
 
 // TODO Quotes change automatically after certain amount of time passes
 
@@ -33,35 +44,53 @@ var quotes = [
     category: "motivation"
   },
   {
-    quote : "44444",
-    source: "Jesus of Nazareth",
-    citation: "Luke 6:31",
-    category: "motivation"
+    quote : "Spread love everywhere you go. Let no one ever come to you without leaving happier.",
+    source: "Mother Teresa",
+    citation: "brainyquote.com/quotes/authors/m/mother_teresa.html",
+    category: "love"
   },
   {
-    quote : "55555",
-    source: "Jesus of Nazareth",
-    citation: "Luke 6:31",
-    category: "motivation"
+    quote : "Education is not preparation for life; education is life itself.",
+    source: "John Dewey",
+    citation: "brainyquote.com/quotes/topics/topic_education.html",
+    category: "education"
   },
   {
-    quote : "66666",
-    source: "Jesus of Nazareth",
-    citation: "Luke 6:31",
-    category: "motivation"
+    quote : "Education is the most powerful weapon which you can use to change the world.",
+    source: "Nelson Mandela",
+    citation: "brainyquote.com/quotes/topics/topic_education.html",
+    category: "education"
   }
 ];
 
 // function to return a random quote
+// It does not return a duplicate quote until all quotes have been returned once
 function getRandomQuote (quote_array) {
 
-  // TODO function does not return a duplicate quote until all quotes have been returned once
+  var new_quote = quote_array[Math.floor(Math.random() * quote_array.length)];
+
+  if (unique_quotes_used.length <= quote_array.length) {
+    while (unique_quotes_used.indexOf(new_quote) != -1) {
+      new_quote = quote_array[Math.floor(Math.random() * quote_array.length)];
+    }
+    unique_quotes_used.push(new_quote);
+  }
 
   return quote_array[Math.floor(Math.random() * quote_array.length)];
 }
 
+// Return a random color from the bg_color array
+function getRandomColor () {
+
+  return bg_colors[Math.floor(Math.random() * bg_colors.length)];
+
+}
+
 // function to build out the HTML string, which is then inserted into the page
 function printQuote () {
+
+  // Background color of page changes each time a new quote is displayed
+  document.body.style.background = getRandomColor();
 
   // Get a random quote from the quotes array
   var selected_quote = getRandomQuote(quotes);
